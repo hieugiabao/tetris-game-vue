@@ -1,3 +1,5 @@
+$light-teal: #009688;
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,7 +7,8 @@
 }
 
 body {
-  background-color: #999;
+  background: $light-teal;
+
   padding: 0;
   margin: 0;
   font:
@@ -21,4 +24,26 @@ body {
   -moz-osx-font-smoothing: grayscale;
   direction: ltr;
   text-align: left;
+}
+
+.state {
+  width: 108px;
+  position: absolute;
+  top: 0;
+  right: 15px;
+
+  p {
+    line-height: 43px;
+    height: 50px;
+    padding: 10px 0 0;
+    white-space: nowrap;
+    clear: both;
+  }
+
+  .last-row {
+    position: absolute;
+    width: 114px;
+    top: 430px;
+    left: 0;
+  }
 }
