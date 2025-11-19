@@ -13,7 +13,7 @@ import type { Tile } from '@/interface/tile/tile'
 import type { Piece } from '@/interface/piece/piece'
 
 export class TetrisService {
-  gameInterval!: number | null | undefined
+  gameInterval!: ReturnType<typeof setInterval> | null | undefined
 
   private readonly soundManager = inject<SoundManagerService>('soundManager')
   private readonly pieceFactory = PieceFactory.getInstance()
