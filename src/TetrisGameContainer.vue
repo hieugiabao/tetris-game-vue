@@ -31,24 +31,25 @@
 </template>
 
 <script setup lang="ts">
-import { inject, onMounted, onUnmounted, ref, useTemplateRef } from 'vue'
-import { useGameStateStore } from './stores/game-state'
-import { useKeyboardStore } from './stores/keyboard'
-import ScreenDecorationComponent from './components/screen-decoration/ScreenDecorationComponent.vue'
-import MatrixComponent from './components/matrix/MatrixComponent.vue'
 import { useObservable } from '@vueuse/rxjs'
-import LogoComponent from './components/logo/LogoComponent.vue'
-import SoundComponent from './components/sound/SoundComponent.vue'
-import PauseComponent from './components/pause/PauseComponent.vue'
+import { inject, onMounted, onUnmounted, ref, useTemplateRef } from 'vue'
 import ClockComponent from './components/clock/ClockComponent.vue'
-import PointComponent from './components/point/PointComponent.vue'
-import StartLineComponent from './components/start-line/StartLineComponent.vue'
-import LevelComponent from './components/level/LevelComponent.vue'
-import NextComponent from './components/next/NextComponent.vue'
 import HoldComponent from './components/hold/HoldComponent.vue'
 import KeyboardComponent from './components/keyboard/KeyboardComponent.vue'
+import LevelComponent from './components/level/LevelComponent.vue'
+import LogoComponent from './components/logo/LogoComponent.vue'
+import MatrixComponent from './components/matrix/MatrixComponent.vue'
+import NextComponent from './components/next/NextComponent.vue'
+import PauseComponent from './components/pause/PauseComponent.vue'
+import PointComponent from './components/point/PointComponent.vue'
+import ScreenDecorationComponent from './components/screen-decoration/ScreenDecorationComponent.vue'
+import SoundComponent from './components/sound/SoundComponent.vue'
+import StartLineComponent from './components/start-line/StartLineComponent.vue'
+import type { KeyAction, TetrisKeyboardEvent } from './interface/keyboard'
 import { SoundManagerService } from './services/sound-manager.service'
 import { TetrisService } from './services/tetris.service'
+import { useGameStateStore } from './stores/game-state'
+import { useKeyboardStore } from './stores/keyboard'
 
 const tetrisState = useGameStateStore()
 const keyboardService = useKeyboardStore()
@@ -60,7 +61,7 @@ const hostRef = useTemplateRef<HTMLDivElement>('host')
 const isShowLogo = useObservable(tetrisState.isShowLogo$)
 const filling = ref(0)
 
-const keyboardEvent = {
+const keyboardEvent: TetrisKeyboardEvent = {
   keyDownLeft() {
     soundManager?.move()
     keyboardService.setKey({
@@ -125,7 +126,7 @@ const keyboardEvent = {
       up: false,
     })
   },
-  keyDownSpace() {
+  keyDownDrop() {
     keyboardService.setKey({
       drop: true,
     })
@@ -137,7 +138,7 @@ const keyboardEvent = {
     soundManager?.start()
     tetrisService?.start()
   },
-  keyUpSpace() {
+  keyUpDrop() {
     keyboardService.setKey({
       drop: false,
     })
@@ -204,14 +205,14 @@ const keyboardEvent = {
   },
 }
 
-function keyboardMouseDown(key: string) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ;(keyboardEvent as any)[`keyDown${key}`]()
+function keyboardMouseDown(key: KeyAction) {
+  const capKey: Capitalize<KeyAction> = key.charAt(0).toUpperCase() + key.slice(1) as Capitalize<KeyAction>
+  keyboardEvent[`keyDown${capKey}`]()
 }
 
-function keyboardMouseUp(key: string) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ;(keyboardEvent as any)[`keyUp${key}`]()
+function keyboardMouseUp(key: KeyAction) {
+  const capKey: Capitalize<KeyAction> = key.charAt(0).toUpperCase() + key.slice(1) as Capitalize<KeyAction>
+  keyboardEvent[`keyUp${capKey}`]()
 }
 
 function setPaddingMargin(paddingTop: number, paddingBottom: number, marginTop: number) {

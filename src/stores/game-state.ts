@@ -53,10 +53,6 @@ export const useGameStateStore = defineStore('gameState', () => {
   const gameState$ = from(gameState, {
     immediate: true,
   })
-  const matrix$ = from(matrix, {
-    immediate: true,
-    deep: true,
-  })
   const current$ = from(current, {
     immediate: true,
   })
@@ -100,7 +96,6 @@ export const useGameStateStore = defineStore('gameState', () => {
     locked,
     canHold,
     gameState$,
-    matrix$,
     current$,
     isShowLogo$,
     updateState,

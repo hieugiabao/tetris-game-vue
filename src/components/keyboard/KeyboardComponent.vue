@@ -7,9 +7,10 @@
       :top="0"
       :left="374"
       :is-absolute="true"
+      :key-binding="TetrisKeyboardCode.Up"
       @mouse-up="onMouseUp"
       @mouse-down="onMouseDown"
-      key-press="Up"
+      key-press="up"
     >
       Rotation
     </ButtonComponent>
@@ -19,9 +20,10 @@
       :arrow-button="ArrowButton.DOWN"
       :top="180"
       :left="374"
+      :key-binding="TetrisKeyboardCode.Down"
       @mouse-up="onMouseUp"
       @mouse-down="onMouseDown"
-      key-press="Down"
+      key-press="down"
     >
       Down
     </ButtonComponent>
@@ -31,9 +33,10 @@
       :arrow-button="ArrowButton.LEFT"
       :top="90"
       :left="284"
+      :key-binding="TetrisKeyboardCode.Left"
       @mouse-up="onMouseUp"
       @mouse-down="onMouseDown"
-      key-press="Left"
+      key-press="left"
     >
       Left
     </ButtonComponent>
@@ -43,9 +46,10 @@
       :arrow-button="ArrowButton.RIGHT"
       :top="90"
       :left="464"
+      :key-binding="TetrisKeyboardCode.Right"
       @mouse-up="onMouseUp"
       @mouse-down="onMouseDown"
-      key-press="Right"
+      key-press="right"
     >
       Right
     </ButtonComponent>
@@ -54,9 +58,10 @@
       :active="keyboardStore.hold"
       :top="100"
       :left="0"
+      :key-binding="TetrisKeyboardCode.C"
       @mouse-up="onMouseUp"
       @mouse-down="onMouseDown"
-      key-press="Hold"
+      key-press="hold"
     >
       Hold (C)
     </ButtonComponent>
@@ -65,9 +70,10 @@
       :active="keyboardStore.drop"
       :top="100"
       :left="110"
+      :key-binding="TetrisKeyboardCode.Space"
       @mouse-up="onMouseUp"
       @mouse-down="onMouseDown"
-      key-press="Space"
+      key-press="drop"
     >
       Drop (Space)
     </ButtonComponent>
@@ -76,9 +82,10 @@
       :active="keyboardStore.reset"
       :top="0"
       :left="196"
+      :key-binding="TetrisKeyboardCode.R"
       @mouse-up="onMouseUp"
       @mouse-down="onMouseDown"
-      key-press="Reset"
+      key-press="reset"
     >
       Reset (R)
     </ButtonComponent>
@@ -87,9 +94,10 @@
       :active="keyboardStore.sound"
       :top="0"
       :left="106"
+      :key-binding="TetrisKeyboardCode.S"
       @mouse-up="onMouseUp"
       @mouse-down="onMouseDown"
-      key-press="Sound"
+      key-press="sound"
     >
       Sound (S)
     </ButtonComponent>
@@ -98,9 +106,10 @@
       :active="keyboardStore.pause"
       :top="0"
       :left="16"
+      :key-binding="TetrisKeyboardCode.P"
       @mouse-up="onMouseUp"
       @mouse-down="onMouseDown"
-      key-press="Pause"
+      key-press="pause"
     >
       {{ pauseButtonLabel }} (P)
     </ButtonComponent>
@@ -108,16 +117,17 @@
 </template>
 
 <script setup lang="ts">
+import { ArrowButton } from '@/interface/arrow-button'
+import { TetrisKeyboardCode, type KeyAction } from '@/interface/keyboard'
 import { useGameStateStore } from '@/stores/game-state'
 import { useKeyboardStore } from '@/stores/keyboard'
 import { computed } from 'vue'
 import ButtonComponent from '../button/ButtonComponent.vue'
-import { ArrowButton } from '@/interface/arrow-button'
 
 type Props = {
   filling?: number
-  onMouseDown: (key: string) => void
-  onMouseUp: (key: string) => void
+  onMouseDown: (key: KeyAction) => void
+  onMouseUp: (key: KeyAction) => void
 }
 
 const tetrisState = useGameStateStore()
